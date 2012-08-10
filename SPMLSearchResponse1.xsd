@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="urn:oasis:names:tc:SPML:2:0" attributeFormDefault="unqualified" elementFormDefault="qualified" 
+	targetNamespace="urn:oasis:names:tc:SPML:2:0" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="urn:oasis:names:tc:DSML:2:0:core" schemaLocation="SPMLSearchResponse2.xsd"/>
+
+  <xs:element name="pso">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="psoID">
+          <xs:complexType>
+            <xs:attribute name="ID" type="xs:string" use="required" />
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="data">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element maxOccurs="unbounded" xmlns:q1="urn:oasis:names:tc:DSML:2:0:core" ref="q1:attr" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+
+    <session-factory>
+
+		<property name="connection.datasource">java:comp/env/jdbc/AuthorityManager</property>
+
+        <!-- Database connection settings -->
+<!-- 
+        <property name="connection.driver_class">org.apache.derby.jdbc.ClientDriver</property>
+        <property name="connection.url">jdbc:derby://localhost:1527/authman</property>
+        <property name="connection.username">authmgr</property>
+        <property name="connection.password">xxxxx</property>
+-->        
+        
+<!--
+        <property name="connection.driver_class">com.ibm.db2.jcc.DB2Driver</property>
+        <property name="connection.url">jdbc:db2://localhost:50000/sample</property>
+        <property name="connection.username">salmiya\roman</property>
+        <property name="connection.password">xxxxx</property>
+--> 
+        <!-- JDBC connection pool (use the built-in) -->
+        <property name="connection.pool_size">1</property>
+
+        <!-- SQL dialect -->
+        <property name="dialect">org.hibernate.dialect.DerbyDialect</property>
+
+        <!-- Enable Hibernate's automatic session context management -->
+        <property name="current_session_context_class">thread</property>
+
+        <!-- Disable the second-level cache  -->
+        <property name="cache.provider_class">org.hibernate.cache.NoCacheProvider</property>
+
+        <!-- Echo all executed SQL to stdout -->
+        <property name="show_sql">false</property>
+
+        <!-- Drop and re-create the database schema on startup
+        <property name="hbm2ddl.auto">create</property>
+        -->
+
+		<mapping resource="com/autheus/authmanager/common/Datasource.hbm.xml"/>
+		<mapping resource="com/autheus/authmanager/common/GroupSetData.hbm.xml"/>
+		<mapping resource="com/autheus/authmanager/common/GroupSetAdmin.hbm.xml"/>
+		<mapping resource="com/autheus/authmanager/common/RuleSetData.hbm.xml"/>
+
+		<mapping resource="com/autheus/authmanager/common/RuleGroup.hbm.xml"/>
+		<mapping resource="com/autheus/authmanager/common/RuleGroupView.hbm.xml"/>
+		<mapping resource="com/autheus/authmanager/common/TargetGroupView.hbm.xml"/>
+		<mapping resource="com/autheus/authmanager/common/SourceRuleView.hbm.xml"/>
+
+		<mapping resource="com/autheus/authmanager/common/Exceptions.hbm.xml"/>
+		<mapping resource="com/autheus/authmanager/common/BusinessExceptions.hbm.xml"/>
+		<mapping resource="com/autheus/authmanager/common/UserSource.hbm.xml"/>
+		<mapping resource="com/autheus/authmanager/common/UserTarget.hbm.xml"/>
+
+		<mapping resource="com/autheus/authmanager/common/CurrentStateGroups.hbm.xml"/>
+
+		<mapping resource="com/autheus/authmanager/common/DatabaseType.hbm.xml"/>
+		<mapping resource="com/autheus/authmanager/common/DatabaseTypeDefaults.hbm.xml"/>
+		<mapping resource="com/autheus/authmanager/common/LdapType.hbm.xml"/>
+		<mapping resource="com/autheus/authmanager/common/LdapTypeDefaults.hbm.xml"/>
+
+		<mapping resource="com/autheus/authmanager/common/Report.hbm.xml"/>
+		<mapping resource="com/autheus/authmanager/common/ReportType.hbm.xml"/>
+
+		<mapping resource="com/autheus/authmanager/common/Reconcile.hbm.xml"/>
+		<mapping resource="com/autheus/authmanager/common/ReconcileUsers.hbm.xml"/>
+		<mapping resource="com/autheus/authmanager/common/ReconcileReport.hbm.xml"/>
+ 		<mapping resource="com/autheus/authmanager/common/ReconcileReportSnapshot.hbm.xml"/>
+
+		<mapping resource="com/autheus/authmanager/common/LdapConnection.hbm.xml"/>
+		<mapping resource="com/autheus/authmanager/common/Tab.hbm.xml"/>
+
+		<mapping resource="com/autheus/authmanager/common/Log.hbm.xml"/>
+        
+    </session-factory>
+
+</hibernate-configuration>

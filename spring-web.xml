@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans>
+    <bean id="dataImportValidator" class="com.autheus.authmanager.web.validator.DataImportValidator"/>
+
+    <bean id="datasourceFormValidator" class="com.autheus.authmanager.web.validator.DatasourceTypeValidator"/>
+
+    <bean id="activationValidator" class="com.autheus.authmanager.web.validator.ActivationValidator"/>
+
+    <bean id="reportValidator" class="com.autheus.authmanager.web.validator.ReportValidator">
+        <property name="reportFacade"><ref bean="reportFacade"/></property>
+    </bean>
+
+    <bean id="datasourceValidator" class="com.autheus.authmanager.web.validator.DatasourceValidator">
+        <property name="sourcesFacade"><ref bean="sourcesFacade"/></property>
+    </bean>
+
+    <bean id="adminValidator" class="com.autheus.authmanager.web.validator.AdminValidator" />
+
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass"><value>org.springframework.web.servlet.view.JstlView</value></property>
+        <property name="prefix"><value>/</value></property>
+        <property name="suffix"><value>.jsp</value></property>
+    </bean>
+    
+    <bean id="methodResolver" class="org.springframework.web.servlet.mvc.multiaction.InternalPathMethodNameResolver"/>
+
+    <bean id="ruleAssignmentSubmitMethodNameResolver" class="com.autheus.framework.web.mvc.SubmitMethodNameResolver">
+        <property name="mappings">
+            <props>
+                <prop key="handleSaveAssignment">handleSaveAssignment</prop>
+            </props>
+        </property>
+        <property name="formSubmitMethod">
+            <value>finalSubmit</value>
+        </property>
+    </bean>
+
+    <bean id="activationSubmitMethodNameResolver" class="com.autheus.framework.web.mvc.SubmitMethodNameResolver">
+        <property name="mappings">
+            <props>
+                <prop key="handleTest">handleTest</prop>
+                <prop key="handleRun">handleRun</prop>
+                <prop key="handleDelete">handleDelete</prop>
+                <prop key="handleSchedulerStart">handleSchedulerStart</prop>
+                <prop key="handleSchedulerStop">handleSchedulerStop</prop>
+                <prop key="data_grid_report__action">handleLiveGridSaveAction</prop>
+            </props>
+        </property>
+        <property name="formSubmitMethod">
+            <value>finalSubmit</value>
+        </property>
+    </bean>
+
+    <bean id="reportSubmitMethodNameResolver" class="com.autheus.framework.web.mvc.SubmitMethodNameResolver">
+        <property name="mappings">
+            <props>
+                <prop key="handleSelectVendor">handleSelectVendor</prop>
+                <prop key="handleNewQueryDb">handleNewQueryDb</prop>
+                <prop key="handleNewQueryLdap">handleNewQueryLdap</prop>
+                <prop key="handleSaveQuery">handleSaveQuery</prop>
+                <prop key="handleRun">handleRun</prop>
+                <prop key="handleDelete">handleDelete</prop>
+                <prop key="handleTest">handleTest</prop>
+                <prop key="handleCopy">handleCopy</prop>
+            </props>
+        </property>
+        <property name="formSubmitMethod">
+            <value>finalSubmit</value>
+        </property>
+    </bean>
+
+    <bean id="sourcesSubmitMethodNameResolver" class="com.autheus.framework.web.mvc.SubmitMethodNameResolver">
+        <property name="mappings">
+            <props>
+                <prop key="handleCreateUserSource">handleCreateUserSource</prop>
+                <prop key="handleCreateUserTarget">handleCreateUserTarget</prop>
+                <prop key="handleCreateRuleSet">handleCreateRuleSet</prop>
+                <prop key="handleCreateGroup">handleCreateGroup</prop>
+                <prop key="handleTest">handleTest</prop>
+                <prop key="handleUpdate">handleUpdate</prop>
+                <prop key="handleDelete">handleDelete</prop>
+                <prop key="handleGetData">handleGetData</prop>
+                <prop key="handleCopy">handleCopy</prop>
+                <prop key="handleInsertData">handleInsertData</prop>
+                <prop key="handleDatasourceSelect">handleDatasourceSelect</prop>
+            </props>
+        </property>
+        <property name="formSubmitMethod">
+            <value>finalSubmit</value>
+        </property>
+    </bean>
+
+    <bean id="adminSubmitMethodNameResolver" class="com.autheus.framework.web.mvc.SubmitMethodNameResolver">
+        <property name="mappings">
+            <props>
+                <prop key="handleTest">handleTest</prop>
+                <prop key="handleUpdate">handleUpdate</prop>
+            </props>
+        </property>
+        <property name="formSubmitMethod">
+            <value>finalSubmit</value>
+        </property>
+    </bean>
+
+    <bean id="sourcesVendorSubmitMethodNameResolver" class="com.autheus.framework.web.mvc.SubmitMethodNameResolver">
+        <property name="mappings">
+            <props>
+                <prop key="handleSelectVendor">handleSelectVendor</prop>
+            </props>
+        </property>
+        <property name="formSubmitMethod">
+            <value>finalSubmit</value>
+        </property>
+    </bean>
+
+    <bean id="dataImportSubmitMethodNameResolver" class="com.autheus.framework.web.mvc.SubmitMethodNameResolver">
+        <property name="mappings">
+            <props>
+                <prop key="handleRuleSetInsert">handleRuleSetInsert</prop>
+<!--                 <prop key="handleRuleSetDownload">handleRuleSetUpload</prop>  -->
+                <prop key="handleGroupInsert">handleGroupInsert</prop>
+<!--				<prop key="handleGroupDownload">handleGroupUpload</prop> -->
+            </props>
+        </property>
+        <property name="formSubmitMethod">
+            <value>finalSubmit</value>
+        </property>
+    </bean>
+
+    <bean id="popupDataController" class="com.autheus.authmanager.web.controller.PopupDataController">
+        <property name="methodNameResolver" ref="methodResolver"/>
+        <property name="sourcesFacade"><ref bean="sourcesFacade"/></property>
+    </bean>
+
+    <bean id="dataImportController" class="com.autheus.authmanager.web.controller.DataImportController">
+        <property name="commandClass"><value>com.autheus.authmanager.common.Datasource</value></property>
+        <property name="methodNameResolver" ref="dataImportSubmitMethodNameResolver"/>
+        <property name="validator"><ref bean="dataImportValidator"/></property>
+        <property name="sourcesFacade"><ref bean="sourcesFacade"/></property>
+    </bean>
+
+    <bean id="datasourceController" class="com.autheus.authmanager.web.controller.DatasourcesVendorController">
+        <property name="methodNameResolver" ref="sourcesVendorSubmitMethodNameResolver"/>
+        <property name="validator"><ref bean="datasourceFormValidator"/></property>        
+        <property name="formView"><value>datasource/datasourceForm</value></property>
+        <property name="successView"><value>datasource/datasourceForm</value></property>
+        <property name="commandClass"><value>com.autheus.authmanager.common.Datasource</value></property>
+    </bean>
+
+    <bean id="userSourcesController" class="com.autheus.authmanager.web.controller.DatasourcesController">
+        <property name="methodNameResolver" ref="sourcesSubmitMethodNameResolver"/>
+        <property name="formView"><value>datasource/userSources</value></property>
+        <property name="successView"><value>datasource/userSources</value></property>
+        <property name="redirectView"><value>datasourceForm.htm</value></property>
+        <property name="commandClass"><value>com.autheus.authmanager.common.Datasource</value></property>
+        <property name="validator"><ref bean="datasourceValidator"/></property>
+        <property name="sourcesFacade"><ref bean="sourcesFacade"/></property>
+    </bean>
+
+    <bean id="userTargetsController" class="com.autheus.authmanager.web.controller.DatasourcesController">
+        <property name="methodNameResolver" ref="sourcesSubmitMethodNameResolver"/>
+        <property name="formView"><value>datasource/userTargets</value></property>
+        <property name="successView"><value>datasource/userTargets</value></property>
+        <property name="redirectView"><value>datasourceForm.htm</value></property>
+        <property name="commandClass"><value>com.autheus.authmanager.common.Datasource</value></property>
+        <property name="validator"><ref bean="datasourceValidator"/></property>
+        <property name="sourcesFacade"><ref bean="sourcesFacade"/></property>
+    </bean>
+
+    <bean id="groupsController" class="com.autheus.authmanager.web.controller.DatasourcesController">
+        <property name="methodNameResolver" ref="sourcesSubmitMethodNameResolver"/>
+        <property name="formView"><value>datasource/groups</value></property>
+        <property name="successView"><value>datasource/groups</value></property>
+        <property name="redirectView"><value>datasourceForm.htm</value></property>
+        <property name="commandClass"><value>com.autheus.authmanager.common.Datasource</value></property>
+        <property name="validator"><ref bean="datasourceValidator"/></property>
+        <property name="sourcesFacade"><ref bean="sourcesFacade"/></property>
+    </bean>
+
+    <bean id="rulesetsController" class="com.autheus.authmanager.web.controller.DatasourcesController">
+        <property name="methodNameResolver" ref="sourcesSubmitMethodNameResolver"/>
+        <property name="formView"><value>datasource/ruleSets</value></property>
+        <property name="successView"><value>datasource/ruleSets</value></property>
+        <property name="redirectView"><value>datasourceForm.htm</value></property>
+        <property name="commandClass"><value>com.autheus.authmanager.common.Datasource</value></property>
+        <property name="validator"><ref bean="datasourceValidator"/></property>
+        <property name="sourcesFacade"><ref bean="sourcesFacade"/></property>
+    </bean>
+
+    <bean id="ruleAssignmentController" class="com.autheus.authmanager.web.controller.RuleAssignmentController">
+        <property name="methodNameResolver" ref="ruleAssignmentSubmitMethodNameResolver"/>
+        <property name="formView"><value>rule/assignment</value></property>
+        <property name="successView"><value>rule/assignment</value></property>
+        <property name="sourcesFacade"><ref bean="sourcesFacade"/></property>
+        <property name="assignmentFacade"><ref bean="assignmentFacade"/></property>
+    </bean>
+
+    <bean id="exceptionAssignmentController" class="com.autheus.authmanager.web.controller.ExceptionAssignmentController">
+        <property name="methodNameResolver" ref="ruleAssignmentSubmitMethodNameResolver"/>
+        <property name="formView"><value>rule/exception</value></property>
+        <property name="successView"><value>rule/exception</value></property>
+        <property name="sourcesFacade"><ref bean="sourcesFacade"/></property>
+        <property name="assignmentFacade"><ref bean="assignmentFacade"/></property>
+    </bean>
+
+    <bean id="businessExceptionAssignmentController" class="com.autheus.authmanager.web.controller.BusinessExceptionAssignmentController">
+        <property name="methodNameResolver" ref="ruleAssignmentSubmitMethodNameResolver"/>
+        <property name="formView"><value>rule/businessException</value></property>
+        <property name="successView"><value>rule/businessException</value></property>
+        <property name="sourcesFacade"><ref bean="sourcesFacade"/></property>
+        <property name="assignmentFacade"><ref bean="assignmentFacade"/></property>
+    </bean>
+
+    <bean id="dsFileController" class="com.autheus.authmanager.web.controller.FileController">
+        <property name="formView"><value>datasource/file</value></property>
+        <property name="successView"><value>files.htm</value></property>
+    </bean>
+
+    <bean id="activationController" class="com.autheus.authmanager.web.controller.ActivationController">
+        <property name="methodNameResolver" ref="activationSubmitMethodNameResolver"/>
+        <property name="formView"><value>activation/activation</value></property>
+        <property name="successView"><value>activation/activation</value></property>
+        <property name="validator"><ref bean="activationValidator"/></property>
+        <property name="activationFacade"><ref bean="activationFacade"/></property>
+        <property name="commandClass"><value>com.autheus.authmanager.common.Activation</value></property>
+    </bean>
+
+    <bean id="reportsController" class="com.autheus.authmanager.web.controller.ReportsController">
+        <property name="methodNameResolver" ref="reportSubmitMethodNameResolver"/>
+        <property name="formView"><value>reports/reports</value></property>
+        <property name="successView"><value>reports/reports</value></property>
+        <property name="redirectView"><value>reports.htm</value></property>
+        <property name="validator"><ref bean="reportValidator"/></property>
+        <property name="reportFacade"><ref bean="reportFacade"/></property>
+        <property name="commandClass"><value>com.autheus.authmanager.common.Report</value></property>
+    </bean>
+
+    <bean id="consoleController" class="com.autheus.authmanager.web.controller.ConsoleController">
+        <property name="formView"><value>console/console</value></property>
+        <property name="successView"><value>console/console</value></property>
+    </bean>
+
+    <bean id="adminController" class="com.autheus.authmanager.web.controller.AdminController">
+        <property name="methodNameResolver" ref="adminSubmitMethodNameResolver"/>
+        <property name="formView"><value>admin/admin</value></property>
+        <property name="successView"><value>admin/admin</value></property>
+        <property name="validator"><ref bean="adminValidator"/></property>
+        <property name="commandClass"><value>com.autheus.authmanager.common.LdapConnection</value></property>
+        <property name="authenticationManager"><ref bean="authenticationManager"/></property>
+        <property name="ldapAuthenticationProvider"><ref bean="ldapAuthenticationProvider"/></property>
+        <property name="daoAuthenticationProvider"><ref bean="daoAuthenticationProvider"/></property>
+    </bean>
+
+    <bean id="authorizationController" class="com.autheus.authmanager.web.controller.AuthorizationController" >
+        <!-- <property name="filterInvocationInterceptor"><ref bean="filterInvocationInterceptor"/></property>-->
+	</bean>
+		
+    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basename"><value>messages</value></property>
+    </bean>
+
+	<bean id="dataDownloadController" class="com.autheus.authmanager.web.controller.DataDownloadController" />
+
+	<bean id="liveGridController" class="com.autheus.authmanager.web.controller.LiveGridController" />
+	<bean id="liveGridReportController" class="com.autheus.authmanager.web.controller.LiveGridReportController" />
+	<bean id="liveGridGroupSetController" class="com.autheus.authmanager.web.controller.LiveGridGroupSetController" />
+	<bean id="liveGridConsoleReportController" class="com.autheus.authmanager.web.controller.LiveGridConsoleReportController" />
+	<bean id="liveGridAdminControllerGroupSet" class="com.autheus.authmanager.web.controller.LiveGridAdminControllerGroupSet" />
+	<bean id="liveGridAdminControllerTab" class="com.autheus.authmanager.web.controller.LiveGridAdminControllerTab" />
+	
+    <bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <property name="mappings">
+            <props>
+                <!-- Actual Autheus Authority Manager configuration -->
+                <prop key="/console/console.htm">consoleController</prop>
+                <prop key="/console/handleConsoleGridReport.htm">liveGridConsoleReportController</prop>
+                <prop key="/datasource/userSources.htm">userSourcesController</prop>
+                <prop key="/datasource/userTargets.htm">userTargetsController</prop>
+                <prop key="/datasource/groups.htm">groupsController</prop>
+                <prop key="/datasource/ruleSets.htm">rulesetsController</prop>
+                <prop key="/datasource/datasourceForm.htm">datasourceController</prop>
+                <prop key="/rule/assignment.htm">ruleAssignmentController</prop>
+                <prop key="/rule/exception.htm">exceptionAssignmentController</prop>
+                <prop key="/rule/businessException.htm">businessExceptionAssignmentController</prop>
+                <prop key="/rule/handleGrid.htm">liveGridController</prop>
+                <prop key="/reports/reports.htm">reportsController</prop>
+                <prop key="/reports/runReport.htm">popupDataController</prop>
+<!--                 <prop key="/reports/runSPML.htm">popupDataController</prop> -->
+                <prop key="/console/runReportConsole.htm">popupDataController</prop>
+                <prop key="/datasource/list/*.htm">popupDataController</prop>
+                <prop key="/datasource/insert.htm">dataImportController</prop>
+                <prop key="/datasource/download.htm">dataDownloadController</prop>
+                <prop key="/activation/activation.htm">activationController</prop>
+                <prop key="/activation/handleGrid.htm">liveGridController</prop>
+                <prop key="/activation/handleGridReport.htm">liveGridReportController</prop>
+                <prop key="/activation/handleGridGroupSet.htm">liveGridGroupSetController</prop>
+                <prop key="/admin/admin.htm">adminController</prop>
+                <prop key="/admin/handleGroupGrid.htm">liveGridAdminControllerGroupSet</prop>
+                <prop key="/admin/handleTabGrid.htm">liveGridAdminControllerTab</prop>
+                <prop key="authorization.htm">authorizationController</prop>
+            </props>
+        </property>
+    </bean>
+<!-- 
+    <bean id="dwrUrlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <property name="alwaysUseFullPath" value="true"/>
+        <property name="mappings">
+        <props>
+            <prop key="/dwr/**/*">dwrController</prop>
+        </props>
+        </property>
+    </bean>
+
+    <bean id="dwrController" class= "org.springframework.web.servlet.mvc.ServletWrappingController">
+      <property name="servletClass">
+        <value>uk.ltd.getahead.dwr.DWRServlet</value>
+      </property>
+      <property name="initParameters">
+        <props>
+          <prop key="debug">true</prop>
+        </props>
+      </property>
+    </bean>
+-->
+    <bean id="sourcesFacade" class="com.autheus.authmanager.facade.SourcesFacade" />
+
+    <bean id="assignmentFacade" class="com.autheus.authmanager.facade.AssignmentFacade" />
+
+    <bean id="activationFacade" class="com.autheus.authmanager.facade.ActivationFacade">
+    	<property name="dataSource" ref="authManagerDatasource"/>
+    </bean>
+
+    <bean id="reportFacade" class="com.autheus.authmanager.facade.ReportFacade" />
+
+</beans>
